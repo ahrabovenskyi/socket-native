@@ -1,6 +1,7 @@
-package com.ahrabovenskyi.socketnative.config;
+package com.ahrabovenskyi.socketnative.handler;
 
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -11,15 +12,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Slf4j
 @Component
 public class SocketHandler extends TextWebSocketHandler {
-
 
     List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message)
             throws IOException {
+
+        log.info("One more user has sent a message...");
 
         for(WebSocketSession webSocketSession : sessions) {
             Map value = new Gson().fromJson(message.getPayload(), Map.class);
